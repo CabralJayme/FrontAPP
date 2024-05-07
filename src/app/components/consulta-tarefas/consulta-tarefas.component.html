@@ -1,0 +1,91 @@
+<div class="container">
+
+
+    <div class="card mt-3">
+        <div class="card-body">
+
+
+            <h5 class="card-title">Consulta de tarefas</h5>
+            <p class="card-text">Informe o período de datas desejado:</p>
+
+
+            <form [formGroup]="formulario" (submit)="consultarTarefas()">
+
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label>Data de início:</label>
+                        <input type="datetime-local" class="form-control" name="dataInicio" formControlName="dataMin"/>
+                        <span class="text-danger" *ngIf="f['dataMin'].touched && f['dataMin'].invalid">
+                        Informe a Data Inicio
+                        </span>
+
+                    </div>
+                    <div class="col-md-3">
+                        <label>Data de término:</label>
+                        <input type="datetime-local" class="form-control" name="dataFim" formControlName="dataMax"/>
+                        <span class="text-danger" *ngIf="f['dataMax'].touched && f['dataMax'].invalid">Informe a Data final</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-primary mt-4"
+                        value="Realizar Pesquisa" name="button" [disabled]="formulario.invalid"/>
+                    </div>
+                </div>
+
+
+            </form>
+
+            <div *ngIf="tarefas.length > 0" class="table-responsive" >
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome da tarefa</th>
+                            <th>Data e Hora</th>
+                            <th>Prioridade</th>
+                            <th>Descrição</th>
+                            <th>Operações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let t of tarefas">
+                            <td>{{t.nome | uppercase}}</td>
+                            <td>{{t.dataHora |date: 'dd/MM/yyy HH:mm'}}</td>
+                            
+                            <td>
+                                <span *ngIf="t.prioridade == 1" class="badge text-bg-danger">
+                                    ALTA
+                                </span>
+                                <span *ngIf="t.prioridade == 2" class="badge text-bg-warning">
+                                    MÉDIA
+                                </span>
+                                <span *ngIf="t.prioridade == 3" class="badge text-bg-success">
+                                    BAIXA
+                                </span>
+                            </td>
+
+                            <td>{{t.descricao}}</td>
+                            <td width="140">
+                                <button class="btn btn-sm btn-outline-primary me-1">
+                                    Editar
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    Excluir
+                                </button>
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+                
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
